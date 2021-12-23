@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKCT|Upload Book</title>
+    <style>  
+        body{  
+            font-family: Calibri, Helvetica, sans-serif;  
+            background-image: url('Library.gif');  
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }  
+        .container {  
+            padding: 50px;  
+            background-image: url('Images/book.gif');   
+            background-size: cover;
+        }  
+
+        input[type=text]{  
+            width: 100%;  
+            padding: 15px;  
+            margin: 5px 0 22px 0;  
+            display: inline-block;  
+            border: none;  
+            background: #f1f1f1;  
+        }  
+        input[type=text]:focus{  
+            background-color: orange;  
+            outline: none;  
+        }  
+        .registerbtn {  
+            background-color: #4CAF50;  
+            color: white;  
+            padding: 16px 40px; 
+            border: none;  
+            cursor: pointer;  
+            margin: 0;
+            position: absolute;
+            left: 50%;
+            -ms-transform: translateX(-50%);
+            transform: translateX(-50%); 
+            opacity: 0.9;
+        }  
+    </style>  
+</head>  
+<body>  
+    <form method="Post" action="BookAddServlet">  
+        <div class="container">  
+            <center>  <h1> Add New Book</h1> </center>  
+            <center>  <h2> Central Library, SKCT </h2> </center>
+            <hr>  
+            <label> ISBN Number </label>   
+            <input type="text" name="ISBN_Number" placeholder= "ISBN Number" size="6" pattern="^(\w{2})+(\d{4})$" required oninvalid="this.setCustomValidity('ISBN Number must contain 2 characters and 4 digits')" oninput="this.setCustomValidity('')"/>   
+            <label> Book Name </label>   
+            <input type="text" name="Book_Name" placeholder="Book Name" size="15" required/>   
+            <label> Author First Name </label>    
+            <input type="text" name="Author_First_Name" placeholder="Author First Name" size="15" pattern = "^([a-zA-Z]{3,10})$" required oninvalid="this.setCustomValidity('First Name must contain atleast 3 charecters')" oninput="this.setCustomValidity('')"/>
+            <label> Author Last Name </label>    
+            <input type="text" name="Author_Last_Name"  placeholder="Author Last Name" size="15" pattern = "^([a-zA-Z]{3,10})$" required oninvalid="this.setCustomValidity('Last Name must contain atleast 3 charecters')" oninput="this.setCustomValidity('')"/>
+            <label> Total Copies </label>    
+            <input type="text" name="Total_Copies" placeholder="Total Copies" size="15" pattern = "^[0-9]$" required oninvalid="this.setCustomValidity('Total Copies Must be an integer')" oninput="this.setCustomValidity('')"/>
+            <label> Reserve Copies </label>    
+            <input type="text" name="Reserve_Copies"  placeholder="Reserve Copies" size="15" pattern = "^[0-9]$" required oninvalid="this.setCustomValidity('Reserve Copies Must be an integer')" oninput="this.setCustomValidity('')"/>
+            <label> Available Copies </label>    
+            <input type="text" name="Available_Copies"  placeholder="Available Copies" size="15" pattern = "^[0-9]$" required oninvalid="this.setCustomValidity('Available Copies Must be an integer')" oninput="this.setCustomValidity('')"/>
+            <label> Category </label>    
+            <input type="text" name="Category"  placeholder="Category" size="15" pattern = "^([a-zA-Z]{3,10})$" required oninvalid="this.setCustomValidity('Category must contain atleast 3 charecters')" oninput="this.setCustomValidity('')"/>
+            <button type="submit" class="registerbtn">Register</button> 
+            <h1></h1>   
+    </form> 
+</body>  
+</html>  

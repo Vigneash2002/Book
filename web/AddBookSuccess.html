@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Success!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+    <style>
+        body{
+            background-image: url('Images/Happy.gif');
+        }
+        .mainDiv{
+            background-color: transparent;
+            width: 400px;
+            height: 400px;
+            margin: 150px auto;
+            border-radius: 10px;
+            text-align: center; 
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; 
+            justify-content:space-between;
+        }
+        button{
+            height: 50px;
+            width: 300px;
+            border-radius:20px;
+            border:none;
+            background-color: blue;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        .button1{
+            margin-right: 10px;
+        }
+        .button1:hover{
+            border: 3px solid white;
+        }
+        .button2:hover{
+            border: 3px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="mainDiv">
+        <h2>Book Added Successfully!</h2>
+        <form action="AddeBook.html">
+        <button class="button1">Add Another Book</button>
+        </form>
+        <form action="index.html">
+        <button class="button2">Go Home</button>
+        </form>
+    </div>
+</body>
+</html>

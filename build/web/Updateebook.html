@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SKCT|Download Book</title>
+    <style>  
+        body{  
+            font-family: Calibri, Helvetica, sans-serif;  
+            background-image: url('Images/Library.gif');  
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }  
+        .mainDiv{
+            background-color: transparent;
+            width: 100%;
+            height: 300px;
+            margin: 50px auto;
+            border-radius: 10px;
+            text-align: center; 
+            display: flex;
+            justify-content: space-around;
+            align-items: center; 
+        }
+        button{
+            height: 200px;
+            width: 200px;
+            border-radius:20px;
+            border:none;
+            background-color: blue;
+            font-family: 'Poppins', sans-serif;
+            font-size: 20px;
+            font-weight: bold;
+            color: white;
+        }
+        .container {  
+            padding: 50px;  
+            background-image: url('Images/book2.gif');   
+            background-size: cover;
+
+        }  
+
+        input[type=text]{  
+            width: 100%;  
+            padding: 15px;  
+            margin: 5px 0 22px 0;  
+            display: inline-block;  
+            border: none;  
+            background: #f1f1f1;  
+        }  
+        input[type=text]:focus{  
+            background-color: orange;  
+            outline: none;  
+        }  
+    </style> <script>
+        var request = new XMLHttpRequest();
+        function searchInfo() {
+            var name = document.myForm.ISBN_Number.value;
+            var url = "Details.jsp?val=" + name;
+
+            try {
+                request.onreadystatechange = function () {
+                    if (request.readyState == 4) {
+                        var val = request.responseText;
+                        document.getElementById('mylocation').innerHTML = val;
+                    }
+                }//end of function  
+                request.open("GET", url, true);
+                request.send();
+            } catch (e) {
+                alert("Unable to connect to server");
+            }
+        }
+    </script>  
+    
+</head>  
+<body>  
+    <form name="myForm">  
+        <div class="container">  
+            <center>  <h1> E Book Download Form</h1> </center>  
+            <center>  <h2> Digital Library, SKCT </h2> </center>
+            <hr> 
+            <label> ISBN Number </label>   
+            <input type="text" name="ISBN_Number" placeholder= "ISBN Number" onkeyup="searchInfo()" size="6" pattern="^(\w{2})+(\d{4})$" required oninvalid="this.setCustomValidity('ISBN Number must contain 2 characters and 4 digits')" oninput="this.setCustomValidity('')"/>   
+            <div class="mainDiv">
+                <button type="submit" formaction="Search.jsp">Update</button>
+                <button type="submit" formaction="View.jsp">View</button>
+                <button type="submit" formaction="BookDeleteServlet" formmethod="post">Delete</button>
+            </div>
+    </form> 
+    <span id="mylocation"></span>  
+</body>  
+</html>  
