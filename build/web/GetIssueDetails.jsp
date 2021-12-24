@@ -51,11 +51,16 @@
     </style> 
 </head>  
 <body>  
-    <form name="myForm">  
+    <form name="myForm" action="IssueBookServlet" method="post">  
         <div class="container">  
-            <center>  <h1> Add New Book</h1> </center>  
+            <center>  <h1> Issue Book</h1> </center>  
             <center>  <h2> Central Library, SKCT </h2> </center>
-            <hr> 
+            <hr>
+            <label> Roll Number </label>    
+            <%
+                String roll_number = request.getParameter("Roll_Number");
+                out.print("<input type='text' name='roll_number'  placeholder='Roll Number' value='"+roll_number+"' readonly='readonly'/>");
+            %>
             <br>
             <label> Student details </label> 
             <br><br>
@@ -64,19 +69,19 @@
                 try {
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
-                    String query = "select rollno,fname,lname,mobile,emailid from user_details where rollno=?";
+                    String query = "select fname,lname,mobile,emailid from user_details where rollno=?";
                     PreparedStatement pstmt = con.prepareStatement(query);
                     pstmt.setString(1, roll_num);
                     ResultSet rst = pstmt.executeQuery();
 
                     if (!rst.isBeforeFirst()) {
-                        out.println("<p>No Book Found!</p>");
+                        out.println("<p>No Student Found!</p>");
                     } else {
                         out.print("<table border='1' cellpadding='2' width='100%'>");
                         out.print("<tr style='background-color:white'>");
-                        out.print("<tr style='background-color:white'><th>Roll Number</th><th>First Name</th><th>Last Name</th><th>Mobile No</th><th>Email</th></tr>");
+                        out.print("<tr style='background-color:white'><th>First Name</th><th>Last Name</th><th>Mobile No</th><th>Email</th></tr>");
                         while (rst.next()) {
-                            out.print("<tr style='background-color:white'><td>" + rst.getInt(1) + "</td><td>" + rst.getString(2) + "</td><td>" + rst.getString(3) + "</td> <td>" + rst.getString(4) + "</td> <td>" + rst.getString(5) + "</td></tr>");
+                            out.print("<tr style='background-color:white'><td>" + rst.getString(1) + "</td><td>" + rst.getString(2) + "</td> <td>" + rst.getString(3) + "</td> <td>" + rst.getString(4) + "</td></tr>");
                         }
                         out.print("</tr>");
                         out.print("</table>");
@@ -87,14 +92,20 @@
                 }
             %>
             <br><br>
-            <label> ISBN Number </label>   
+            <label> ISBN Number </label>    
+            <%
+                String isbn_num = request.getParameter("ISBN_Number");
+                out.print("<input type='text' name='isbn_number' value='"+isbn_num+"' placeholder='ISBN Number' readonly='readonly'/>");
+            %>
+            <br>
+            <label> Book Details </label>   
             <br><br>
             <%
                 String isbn_number = request.getParameter("ISBN_Number");
                 try {
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
-                    String query = "select isbn,book,fname,lname,total,reserve,available ,category from lmsbook where isbn=?";
+                    String query = "select book,fname,lname,total,reserve,available ,category from lmsbook where isbn=?";
                     PreparedStatement pstmt = con.prepareStatement(query);
                     pstmt.setString(1, isbn_number);
                     ResultSet rst = pstmt.executeQuery();
@@ -104,9 +115,9 @@
                     } else {
                         out.print("<table border='1' cellpadding='2' width='100%'>");
                         out.print("<tr style='background-color:white'>");
-                        out.print("<tr style='background-color:white'><th>ISBN Number</th><th>Book Name</th><th>Author First Name</th><th>Author Last Name</th><th>Total Copies</th><th>Reserve Copies</th><th>Available Copies</th><th>Category</th></tr>");
+                        out.print("<tr style='background-color:white'><th>Book Name</th><th>Author First Name</th><th>Author Last Name</th><th>Total Copies</th><th>Reserve Copies</th><th>Available Copies</th><th>Category</th></tr>");
                         while (rst.next()) {
-                            out.print("<tr style='background-color:white'><td>" + rst.getString(1) + "</td><td>" + rst.getString(2) + "</td><td>" + rst.getString(3) + "</td> <td>" + rst.getString(4) + "</td> <td>" + rst.getString(5) + "</td> <td>" + rst.getString(6) + "</td> <td>" + rst.getString(7) + "</td> <td>" + rst.getString(8) + "</td></tr>");
+                            out.print("<tr style='background-color:white'><td>" + rst.getString(1) + "</td><td>" + rst.getString(2) + "</td> <td>" + rst.getString(3) + "</td> <td>" + rst.getString(4) + "</td> <td>" + rst.getString(5) + "</td> <td>" + rst.getString(6) + "</td> <td>" + rst.getString(7) + "</td></tr>");
                         }
                         out.print("</tr>");
                         out.print("</table>");
@@ -126,13 +137,13 @@
             <br><br>
             <label> Issue Date </label> 
             <%
-                out.print("<input type='text' name='Tssue_Date' value='"+issue_date+"' disabled/>");
+                out.print("<input type='text' name='Issue_Date' value='"+issue_date+"' readonly='readonly'/>");
             %>
             <label> Return Date </label> 
             <%
-                out.print("<input type='text' name='Return_Date' value='"+due_date+"' disabled/>");
+                out.print("<input type='text' name='Return_Date' value='"+due_date+"' readonly='readonly'/>");
             %>
-            <button type="submit" class="registerbtn">Register</button> 
+            <button type="submit" class="registerbtn">Issue</button> 
             <h1></h1>   
     </form> 
     <span id="mylocation"></span> 

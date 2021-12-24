@@ -60,36 +60,17 @@ and open the template in the editor.
                 alert("Unable to connect to server");
             }
         }
-    function searchBookInfo() {
-            var name = document.myForm.ISBN_Number.value;
-            var url = "Details.jsp?val=" + name;
-
-            try {
-                request.onreadystatechange = function () {
-                    if (request.readyState == 4) {
-                        var val = request.responseText;
-                        document.getElementById('mylocation').innerHTML = val;
-                    }
-                }//end of function  
-                request.open("GET", url, true);
-                request.send();
-            } catch (e) {
-                alert("Unable to connect to server");
-            }
-        }
     </script>  
 </head>  
 <body>  
-    <form name="myForm" action="GetIssueDetails.jsp">  
+    <form name="myForm" action="GetReturnDetails.jsp">  
         <div class="container">  
-            <center>  <h1> Issue Book</h1> </center>  
+            <center>  <h1> Return Book</h1> </center>  
             <center>  <h2> Central Library, SKCT </h2> </center>
             <hr> 
             <label> Roll Number </label>    
             <input type="text" name="Roll_Number"  placeholder="Roll Number" onkeyup="searchStudentInfo()" size="5" pattern = "^(\d{4})$" required oninvalid="this.setCustomValidity('Roll Number Must be an integer')" oninput="this.setCustomValidity('')"/>
-            <label> ISBN Number </label>   
-            <input type="text" name="ISBN_Number" placeholder= "ISBN Number" onkeyup="searchBookInfo()" size="6" pattern="^(\w{2})+(\d{4})$" required oninvalid="this.setCustomValidity('ISBN Number must contain 2 characters and 4 digits')" oninput="this.setCustomValidity('')"/>   
-            <button type="submit" class="registerbtn">Get Issue Details</button> 
+            <button type="submit" class="registerbtn">Get Return Details</button> 
             <h1></h1>   
     </form> 
     <span id="mylocation"></span> 

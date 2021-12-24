@@ -19,12 +19,14 @@
             <file>file:/E:/JAVA/Book/web/AddeBook.html</file>
             <file>file:/E:/JAVA/Book/web/Details.jsp</file>
             <file>file:/E:/JAVA/Book/src/java/DeleteBook/BookDeleteServlet.java</file>
+            <file>file:/E:/JAVA/Book/web/IssueBookSucess.html</file>
             <file>file:/E:/JAVA/Book/src/java/DeleteBook/BookDelete.java</file>
             <file>file:/E:/JAVA/Book/web/AddBookFail.html</file>
             <file>file:/E:/JAVA/Book/web/View.jsp</file>
             <file>file:/E:/JAVA/Book/src/java/UpdateBook/BookUpdateServlet.java</file>
             <file>file:/E:/JAVA/Book/web/UpdateBookFail.html</file>
             <file>file:/E:/JAVA/Book/web/DeleteBookSuccess.html</file>
+            <file>file:/E:/JAVA/Book/web/IssueBookFail.html</file>
             <file>file:/E:/JAVA/Book/src/java/AddBook/AddBookBean.java</file>
             <file>file:/E:/JAVA/Book/web/Search.jsp</file>
             <file>file:/E:/JAVA/Book/web/Updateebook.html</file>

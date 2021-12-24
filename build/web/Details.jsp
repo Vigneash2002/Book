@@ -33,9 +33,8 @@
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
-            String query = "select isbn,book,fname,lname,total,reserve,available ,category from lmsbook where isbn=?";
+            String query = "select isbn,book,fname,lname,total,reserve,available ,category from lmsbook where isbn like '" + isbn_number + "%'";
             PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, isbn_number);
             ResultSet rst = pstmt.executeQuery();
 
             if (!rst.isBeforeFirst()) {

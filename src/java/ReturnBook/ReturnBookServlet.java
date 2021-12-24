@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package IssueBook;
+package ReturnBook;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,8 +17,8 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author nsivaakumaar
  */
-@WebServlet("/issue")
-public class IssueBookServlet extends HttpServlet {
+@WebServlet("/book_return")
+public class ReturnBookServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -34,12 +34,10 @@ public class IssueBookServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            IssueBookBean ob = new IssueBookBean();
-            ob.setisbn_number(request.getParameter("isbn_number"));
+            ReturnBookBean ob = new ReturnBookBean();
+            ob.setisbn_number(request.getParameter("ISBN_Number"));
             ob.setroll_number(request.getParameter("roll_number"));
-            ob.setissue_date(request.getParameter("Issue_Date"));
-            ob.setdue_date(request.getParameter("Return_Date"));
-            if(IssueBook.insert(ob)){
+            if(ReturnBook.bookreturn(ob)){
                 response.sendRedirect("IssueBookSucess.html");
             }
             else{

@@ -33,9 +33,8 @@
         try {
             Class.forName("oracle.jdbc.driver.OracleDriver");
             Connection con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
-            String query = "select rollno,fname,lname,mobile,emailid from user_details where rollno=?";
+            String query = "select rollno,fname,lname,mobile,emailid from user_details where rollno like '" + roll_num + "%'";
             PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, roll_num);
             ResultSet rst = pstmt.executeQuery();
 
             if (!rst.isBeforeFirst()) {

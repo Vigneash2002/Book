@@ -1,8 +1,11 @@
 <%-- 
-    Document   : GetIssueDetails
-    Created on : Dec 23, 2021, 7:59:48 AM
+    Document   : newjspGetReturnDetails
+    Created on : Dec 24, 2021, 8:42:36 AM
     Author     : nsivaakumaar
 --%>
+
+<%@page import="ReturnBook.ReturnBookBean"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.DriverManager"%>
@@ -10,7 +13,6 @@
 <%@page import="java.sql.Connection"%>
 <%@page import="java.util.Calendar"%>
 <%@page import="java.text.SimpleDateFormat"%>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>  
     <meta charset="UTF-8">
@@ -51,7 +53,7 @@
     </style> 
 </head>  
 <body>  
-    <form name="myForm" action="IssueBookServlet" method="post">  
+    <form name="myForm" action="ReturnBookServlet" method="post">  
         <div class="container">  
             <center>  <h1> Issue Book</h1> </center>  
             <center>  <h2> Central Library, SKCT </h2> </center>
@@ -92,60 +94,56 @@
                 }
             %>
             <br><br>
-            <label> ISBN Number </label>    
-            <%
-                String isbn_num = request.getParameter("ISBN_Number");
-                out.print("<input type='text' name='isbn_number' value='"+isbn_num+"' placeholder='ISBN Number' readonly='readonly'/>");
-            %>
-            <br>
             <label> Book Details </label>   
             <br><br>
             <%
-                String isbn_number = request.getParameter("ISBN_Number");
                 try {
                     Class.forName("oracle.jdbc.driver.OracleDriver");
                     Connection con = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
-                    String query = "select book,fname,lname,total,reserve,available ,category from lmsbook where isbn=?";
+                    String query = "select isbn,issue,due from bookmanage where rollno=?";
                     PreparedStatement pstmt = con.prepareStatement(query);
-                    pstmt.setString(1, isbn_number);
+                    pstmt.setString(1, roll_number);
                     ResultSet rst = pstmt.executeQuery();
-
-                    if (!rst.isBeforeFirst()) {
-                        out.println("<p>No Book Found!</p>");
-                    } else {
-                        out.print("<table border='1' cellpadding='2' width='100%'>");
-                        out.print("<tr style='background-color:white'>");
-                        out.print("<tr style='background-color:white'><th>Book Name</th><th>Author First Name</th><th>Author Last Name</th><th>Total Copies</th><th>Reserve Copies</th><th>Available Copies</th><th>Category</th></tr>");
-                        while (rst.next()) {
-                            out.print("<tr style='background-color:white'><td>" + rst.getString(1) + "</td><td>" + rst.getString(2) + "</td> <td>" + rst.getString(3) + "</td> <td>" + rst.getString(4) + "</td> <td>" + rst.getString(5) + "</td> <td>" + rst.getString(6) + "</td> <td>" + rst.getString(7) + "</td></tr>");
+                    out.print("<table border='1' cellpadding='2' width='100%'>");
+                    out.print("<tr style='background-color:white'>");
+                    out.print("<tr style='background-color:white'><th>ISBN Number</th><th>Book Name</th><th>Author First Name</th><th>Author Last Name</th><th>Issue Date</th><th>Due Date</th></tr>");    
+                    while (rst.next()) {
+                        ReturnBookBean ob = new ReturnBookBean();
+                        ob.setisbn_number(rst.getString("isbn"));
+                        ob.setissue_date(rst.getString("issue"));
+                        ob.setdue_date(rst.getString("due"));
+                        try {
+                            Class.forName("oracle.jdbc.driver.OracleDriver");
+                            Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:XE", "system", "oracle");
+                            String query1 = "select book,fname,lname from lmsbook where isbn=?";
+                            PreparedStatement pstmt1 = con.prepareStatement(query1);
+                            pstmt1.setString(1, ob.getisbn_number());
+                            ResultSet rst1 = pstmt1.executeQuery();
+                            while (rst1.next()) {
+                                ob.setbook_name(rst1.getString("book"));
+                                ob.setauthor_first_name(rst1.getString("fname"));
+                                ob.setauthor_last_name(rst1.getString("lname"));
+                            }
+                            conn.close();
+                        } catch (Exception ex) {
+                            System.out.println(ex);
                         }
-                        out.print("</tr>");
-                        out.print("</table>");
-                    }//end of else for rst.isBeforeFirst  
+                        out.print("<tr style='background-color:white'><td>" + ob.getisbn_number() + "</td><td>" + ob.getbook_name() + "</td><td>" +ob.getauthor_first_name() + "</td> <td>" + ob.getauthor_last_name() + "</td> <td>" + ob.getissue_date() + "</td> <td>" + ob.getdue_date() + "</td></tr>");          
+                    }
+                    out.print("</tr>");
+                    out.print("</table>");
                     con.close();
-                } catch (Exception e) {
-                    out.print(e);
+                } catch (Exception ex) {
+                    System.out.println(ex);
                 }
             %>
-            <%
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Calendar c = Calendar.getInstance();
-                String issue_date = sdf.format(c.getTime());
-                c.add(Calendar.DAY_OF_MONTH, 7);
-                String due_date = sdf.format(c.getTime());
-            %>
             <br><br>
-            <label> Issue Date </label> 
-            <%
-                out.print("<input type='text' name='Issue_Date' value='"+issue_date+"' readonly='readonly'/>");
-            %>
-            <label> Return Date </label> 
-            <%
-                out.print("<input type='text' name='Return_Date' value='"+due_date+"' readonly='readonly'/>");
-            %>
-            <button type="submit" class="registerbtn">Issue</button> 
+            <label> ISBN Number </label>   
+            <input type="text" name="ISBN_Number" placeholder= "ISBN Number" onkeyup="searchBookInfo()" size="6" pattern="^(\w{2})+(\d{4})$" required oninvalid="this.setCustomValidity('ISBN Number must contain 2 characters and 4 digits')" oninput="this.setCustomValidity('')"/>   
+            <button type="submit" class="registerbtn">Return</button> 
             <h1></h1>   
     </form> 
     <span id="mylocation"></span> 
 </body>  
 </html>  
+

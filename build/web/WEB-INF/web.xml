@@ -16,6 +16,10 @@
         <servlet-name>IssueBookServlet</servlet-name>
         <servlet-class>IssueBook.IssueBookServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReturnBookServlet</servlet-name>
+        <servlet-class>ReturnBook.ReturnBookServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AddBookServlet</servlet-name>
         <url-pattern>/AddBookServlet</url-pattern>
@@ -31,6 +35,10 @@
     <servlet-mapping>
         <servlet-name>IssueBookServlet</servlet-name>
         <url-pattern>/IssueBookServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReturnBookServlet</servlet-name>
+        <url-pattern>/ReturnBookServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
